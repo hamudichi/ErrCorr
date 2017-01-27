@@ -44,10 +44,7 @@ int main(int argc, char *argv[])
 	short modified;
 	int bitNum;		// bit number to be used
 	
-	int res = isShortBitSet(9,1);
-    printf("K %d\n",  (1 << 0);
- (num & (1 << bitNum)) >> bitNum
-	
+	printf("Hello World %d\n", countBits(95));
 	test = 0;
 	bitNum = 2;
 	modified = test;
@@ -171,9 +168,12 @@ int countBits(short num)
      * 0x9  = 1001 | 2 bits set to 1
      * 0x11 = 1011 | 3 bits set to 1
      */
+     int total = 0;
+     for (int i = 0; i < sizeof(num)*8; i++) {
+	if (isShortBitSet(num, i) == 1) total++;
+     }
 
-    // add code
-    
+     return total;
 }
 
 
