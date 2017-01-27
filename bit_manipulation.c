@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	short modified;
 	int bitNum;		// bit number to be used
 	
-	printf("Hello World %d\n", countBits(95));
+
 	test = 0;
 	bitNum = 2;
 	modified = test;
