@@ -79,10 +79,9 @@ return:
 
 */
 
-int isCharBitSet(char c, int bitNum)
-
-{
-    // add code 
+int isCharBitSet(char c, int bitNum) {
+    // Unlick short, char is only 8 bits compared to 16 for short
+    return (c & (1 << bitNum)) >> bitNum;
 }
 
 
@@ -119,10 +118,10 @@ bitNum - the bit number to be checked
 
 */
 
-void setShortBit(int bitNum, short *num)
-
-{
-    // add code 
+void setShortBit(int bitNum, short *num) {
+	/* Checks if the bit is 0 and changes it, if not then keeps it the same. */
+	if (isShortBitSet(*num, bitNum) == 0)
+		flipBitShort(bitNum, *num)
 }
 
 /*************************************************************************************/
@@ -142,9 +141,8 @@ return:
 void setCharBit(int bitNum, char *c)
 
 {
-
-    // add code
-    //
+	if(isCharBitSet(*c,bitNum) == 0)
+		*c ^= (1 << bitNum);
 }
 
 /*************************************************************************************/
@@ -168,10 +166,10 @@ int countBits(short num)
      * 0x9  = 1001 | 2 bits set to 1
      * 0x11 = 1011 | 3 bits set to 1
      */
-     int total = 0;
-     for (int i = 0; i < sizeof(num)*8; i++) {
-	if (isShortBitSet(num, i) == 1) total++;
-     }
+	int total = 0;
+    for (int i = 0; i < sizeof(num)*8; i++) {
+		if (isShortBitSet(num, i) == 1) total++;
+	}
 
      return total;
 }
@@ -194,8 +192,8 @@ num - address of the short integer
 void flipBitShort(int bitNum, short *num)
 
 {
-
-    // add code
+    /* Flip the bit at i */
+     *num ^= (1 << bitNum);
 }
 
 
