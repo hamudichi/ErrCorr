@@ -64,8 +64,6 @@ int main(int argc, char *argv[])
 }
 
 
-
-
 /*************************************************************************************/
 /* purpose: checks if bit i is set
 
@@ -80,8 +78,7 @@ return:
 */
 
 int isCharBitSet(char c, int bitNum) {
-    // Unlick short, char is only 8 bits compared to 16 for short
-    return (c & (1 << bitNum)) >> bitNum;
+    return isShortBitSet(c, bitNum);
 }
 
 
@@ -114,14 +111,14 @@ input:
 num - the address of the short integer
 bitNum - the bit number to be checked
 
-
+	
 
 */
 
 void setShortBit(int bitNum, short *num) {
 	/* Checks if the bit is 0 and changes it, if not then keeps it the same. */
 	if (isShortBitSet(*num, bitNum) == 0)
-		flipBitShort(bitNum, *num)
+		flipBitShort(bitNum, *num);
 }
 
 /*************************************************************************************/
@@ -141,8 +138,9 @@ return:
 void setCharBit(int bitNum, char *c)
 
 {
-	if(isCharBitSet(*c,bitNum) == 0)
-		*c ^= (1 << bitNum);
+	setShortBit(bitNum, &c);
+	//if(isCharBitSet(*c,bitNum) == 0)
+	//	*c ^= (1 << bitNum);
 }
 
 /*************************************************************************************/
