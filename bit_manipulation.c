@@ -32,8 +32,7 @@ file created: Doron Nussbaum
 /***************************************************/
 
 //example of a testing function main();
-
-
+/*
 int main(int argc, char *argv[])
 
 {
@@ -63,7 +62,7 @@ int main(int argc, char *argv[])
 	return(0);
 }
 
-
+*/
 /*************************************************************************************/
 /* purpose: checks if bit i is set
 
@@ -118,7 +117,7 @@ bitNum - the bit number to be checked
 void setShortBit(int bitNum, short *num) {
 	/* Checks if the bit is 0 and changes it, if not then keeps it the same. */
 	if (isShortBitSet(*num, bitNum) == 0)
-		flipBitShort(bitNum, *num);
+		flipBitShort(bitNum, &num);
 }
 
 /*************************************************************************************/
