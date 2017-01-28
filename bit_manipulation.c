@@ -116,7 +116,7 @@ bitNum - the bit number to be checked
 
 void setShortBit(int bitNum, short *num) {
 	/* Checks if the bit is 0 and changes it, if not then keeps it the same. */
-	if (isShortBitSet(*num, bitNum) == 0)
+	if (isShortBitSet(&num, bitNum) == 0)
 		flipBitShort(bitNum, &num);
 }
 

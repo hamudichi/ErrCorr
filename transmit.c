@@ -181,7 +181,7 @@ int char2Short(char c, short *encodedChar)
 
 
 input
-num - the short numbe where parithy bits must be set
+num - the short number where parithy bits must be set
 */
 
 
@@ -192,32 +192,37 @@ int setParityBits(short *num)
 	int sum;
 
 	// set parity bit p1
-    
-     
     // get the bits covered by the mask
 
+    int bitsCovered = *num | P1_MASK;
+
     // count the number of bits
-    
+    sum = countBits(bitsCovered);
     
     // if the numbef of bits is odd then set the parity bit P1
-
+    if (sum % 2 != 0) setShortBit(0, *num);
 
 	// set parity bit p2
 	// get the bits covered by the mask for P2
-    
+    bitsCovered = *num | P2_MASK;
      
     // count the numbefr of bits and set the parity of P2 
+    sum = countBits(bitsCovered);
+    if (sum % 2 != 0) setShortBit(2, *num);
 
 	// set parity bit p4
 	// get the bits covered by the mask for P4
-    
+    bitsCovered = *num | P4_MASK;
      
     // count the numbefr of bits and set the parity of P4 
-	
+	sum = countBits(bitsCovered);
+    if (sum % 2 != 0) setShortBit(4, *num);
     
     // set parity bit p8
     // count the numbefr of bits and set the parity of P8 
-
+    bitsCovered = *num | P8_MASK;
+    sum = countBits(bitsCovered);
+    if (sum % 2 != 0) setShortBit(8, *num);
 
 	return(0);
 }
