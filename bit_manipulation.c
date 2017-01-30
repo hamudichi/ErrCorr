@@ -9,7 +9,7 @@ contains helper functions for manipulating bits
 
 Revisions:
 file created: Doron Nussbaum
-
+implemented function prototypes - Mohamad Yassine
 * /
 
 /************************************************************************/
@@ -32,7 +32,7 @@ file created: Doron Nussbaum
 /***************************************************/
 
 //example of a testing function main();
-/*
+#if 0
 int main(int argc, char *argv[])
 
 {
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	return(0);
 }
 
-*/
+#endif
 /*************************************************************************************/
 /* purpose: checks if bit i is set
 
@@ -77,7 +77,7 @@ return:
 */
 
 int isCharBitSet(char c, int bitNum) {
-    return isShortBitSet(c, bitNum);
+    return ((c >> bitNum) & 1);
 }
 
 
@@ -100,7 +100,7 @@ int isShortBitSet(short num, int bitNum)
 
 {
 	/* ADDED JAN 26 19:30 */
-	return (num & (1 << bitNum)) >> bitNum;
+    return (num >> bitNum) & 1;
 }
 
 /*************************************************************************************/
@@ -116,8 +116,7 @@ bitNum - the bit number to be checked
 
 void setShortBit(int bitNum, short *num) {
 	/* Checks if the bit is 0 and changes it, if not then keeps it the same. */
-	if (isShortBitSet(&num, bitNum) == 0)
-		flipBitShort(bitNum, &num);
+    *num = *num | 1 << bitNum;
 }
 
 /*************************************************************************************/
@@ -137,9 +136,8 @@ return:
 void setCharBit(int bitNum, char *c)
 
 {
-	setShortBit(bitNum, &c);
-	//if(isCharBitSet(*c,bitNum) == 0)
-	//	*c ^= (1 << bitNum);
+    *c = (*c >> bitNum) & 1;
+    return;
 }
 
 /*************************************************************************************/
@@ -164,17 +162,17 @@ int countBits(short num)
      * 0x11 = 1011 | 3 bits set to 1
      */
 	int total = 0;
-    for (int i = 0; i < sizeof(num)*8; i++) {
-		if (isShortBitSet(num, i) == 1) total++;
-	}
+    int atNow = 0;
+    int i;
+    for (i = 0; i < 16; i++) {
+        atNow = isCharBitSet(num, i);
+        if (atNow) total++;
+    }
+	//	if (isShortBitSet(num, i) == 1) total++;
+	
 
      return total;
 }
-
-
-
-
-
 
 /*************************************************************************************/
 
@@ -190,7 +188,8 @@ void flipBitShort(int bitNum, short *num)
 
 {
     /* Flip the bit at i */
-     *num ^= (1 << bitNum);
+     *num ^= 1 << bitNum;
+     return;
 }
 
 

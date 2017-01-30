@@ -14,6 +14,7 @@ As part of the simulation, the program also injects errors to the encoded messag
 
 Revision:
 a. Initial code - Doron Nussbaum
+b. Updated code - Mohamad Yassine
 
 */
 
@@ -72,8 +73,6 @@ int main(int argc, char *argv[])
 		char2Short(s[i], &encodedMsg[i]);	// embedd the char in a short int
 		setParityBits(&encodedMsg[i]);		// set the parity bits
 	}
-
-
 	// add errors to mesage 
 	for (i = 0; i < numRead; i++) {
 		if (rand()%36000 < 25000) {
@@ -81,7 +80,6 @@ int main(int argc, char *argv[])
 			flipBitShort(bit, &encodedMsg[i]);
 		}
 	}
-
 	// print the message
 	printf("\n\n Transmitted message (short integers):\n");
 	for (i = 0; i < numRead; i++) {
@@ -191,40 +189,39 @@ int setParityBits(short *num)
 	int mask;
 	int sum;
 
-	// set parity bit p1
-    // get the bits covered by the mask
+    /*
+     * Set parity bits p1 p2 p4 p8
+     * Summary: 
+     *  1 - Apply the MASK using the AND operand
+     *  2 - Count the bits that are the result of the AND
+     *  3 - Find if ODD or Even
+     *      - ODD : If it was ODD (sum % 2 isn't 0) then
+     *              We have to set that bit to 1 to make
+     *              it even.
+     *      - EVEN: Do nothing.
+     *  4 - Done.
+     * */
 
-    int bitsCovered = *num | P1_MASK;
+    /* Apply MASK */
+    mask = *num & P1_MASK;
+    /* Find the sum total of resulting bits */
+    sum = countBits(mask); 
+    /* Set parity bit p1*/
+    if (sum % 2 != 0) setShortBit(1, num); 
 
-    // count the number of bits
-    sum = countBits(bitsCovered);
     
-    // if the numbef of bits is odd then set the parity bit P1
-    if (sum % 2 != 0) setShortBit(0, *num);
+    mask = *num & P2_MASK;
+    sum = countBits(mask);
+    if (sum % 2 != 0) setShortBit(2, num);
 
-	// set parity bit p2
-	// get the bits covered by the mask for P2
-    bitsCovered = *num | P2_MASK;
-     
-    // count the numbefr of bits and set the parity of P2 
-    sum = countBits(bitsCovered);
-    if (sum % 2 != 0) setShortBit(2, *num);
-
-	// set parity bit p4
-	// get the bits covered by the mask for P4
-    bitsCovered = *num | P4_MASK;
-     
-    // count the numbefr of bits and set the parity of P4 
-	sum = countBits(bitsCovered);
-    if (sum % 2 != 0) setShortBit(4, *num);
+    mask = *num & P4_MASK;
+    sum = countBits(mask);
+    if (sum % 2 != 0) setShortBit(4, num);
     
-    // set parity bit p8
-    // count the numbefr of bits and set the parity of P8 
-    bitsCovered = *num | P8_MASK;
-    sum = countBits(bitsCovered);
-    if (sum % 2 != 0) setShortBit(8, *num);
-
+    mask = *num & P8_MASK;
+    sum = countBits(mask);
+    if (sum % 2 != 0) setShortBit(8, num);
+    
 	return(0);
 }
-
 
