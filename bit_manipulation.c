@@ -48,7 +48,8 @@ int main(int argc, char *argv[])
 	bitNum = 2;
 	modified = test;
 	flipBitShort(bitNum, &modified);
-	printf("test_int=%d, flipping bit #=%d, answer should be=%d, test_modified=%d\n", test, bitNum, 4, modified);
+	printf("test_int=%d, flipping bit #=%d, answer should be=%d, test_modified=%d\n"
+            , test, bitNum, 4, modified);
 
 	rc = isShortBitSet(modified, 3);
 	printf("Bit 3 in %d should not be set.  Answer is %d \n", modified, rc);
@@ -136,8 +137,9 @@ return:
 void setCharBit(int bitNum, char *c)
 
 {
-    *c = (*c >> bitNum) & 1;
-    return;
+    //*c = (*c >> bitNum) & 1;
+    *c = *c | (1 << bitNum);
+    
 }
 
 /*************************************************************************************/
@@ -192,4 +194,16 @@ void flipBitShort(int bitNum, short *num)
      return;
 }
 
+/*****************************************************************************/
+
+int compareBits(short modul, short mask, short num) {
+    int sum = 0;
+
+    for (int i = 0; i < sizeof(mask)*8; i++) {
+        if (isShortBitSet(num, i) & isShortBitSet(mask, i))
+            sum += 1;
+    }
+
+    return sum % modul;
+} 
 
