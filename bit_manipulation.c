@@ -195,8 +195,12 @@ void flipBitShort(int bitNum, short *num)
 }
 
 /*****************************************************************************/
+/*
+ * Compare the bits between the already known masks (P1_MASK, P2_MASK ..etc )
+ * 
+ */
 
-int compareBits(short modul, short mask, short num) {
+int compareBits(short modular, short mask, short num) {
     int sum = 0;
 
     for (int i = 0; i < sizeof(mask)*8; i++) {
@@ -204,6 +208,6 @@ int compareBits(short modul, short mask, short num) {
             sum += 1;
     }
 
-    return sum % modul;
+    return sum % modular;
 } 
 
