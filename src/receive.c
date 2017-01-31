@@ -32,8 +32,6 @@ b. Updated code - Mohamad Yassine
 /************************************************************************/
 //MACROS  / DEFINES
 
-
-
 #define XSTR(A) STR(A)
 #define STR(A) #A
 #define MAX_INPUT_LENGTH 8192
@@ -44,6 +42,16 @@ b. Updated code - Mohamad Yassine
 #define P8_MASK 0x1e00  // 0b1111000000000
 
 
+// http://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+#define CLEAR "\033[2J"
+
 /************************************************************************/
 // FUNCTION PROTOTYPES
 
@@ -51,7 +59,6 @@ b. Updated code - Mohamad Yassine
 void short2Char(short encodedChar, char *c);
 void correctCode(short *num);
 void readEncodedMessage(short *buf, int len, int *numRead);
-
 
 
 
@@ -68,6 +75,9 @@ int main(int argc, char *argv[])
 	int i;
 
 	// read the message
+	printf(CLEAR); // clear screen
+	printf("Hamming Code Implementation v1.0.0\n"
+		"by Mohamad Yassine\n");
 	printf("Please enter the transmitted message: ");
 	readEncodedMessage(encodedMsg, MAX_MSG_LENGTH, &numRead);
 
@@ -97,7 +107,6 @@ int main(int argc, char *argv[])
 		printf("%c", c);
 	}
 	printf("\n");
-
 	return(0);
 }
 
@@ -237,9 +246,8 @@ void correctCode(short *num)
     if (compareBits(2, P8_MASK, *num)) parity = 1;
     if (storedParity != parity) bitNumber += 8;
 
-
-    // Flip incorect bit
+    // Flip incorrect bit
     flipBitShort(bitNumber, num);
 
-    return ;
+    return;
 } 
