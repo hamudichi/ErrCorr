@@ -42,6 +42,21 @@ b. Updated code - Mohamad Yassine
 #define P8_MASK 0x1e00  // 0b1111000000000
 
 
+/* The following are ANSI Escape Sequences. 
+ * You can find more by typing: man terminfo
+ * The exact ones under can be found on stackoverflow here:
+ * http://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c
+ */
+
+#define ANSI_COLOR_RED     "\x1b[31;1m"
+#define ANSI_COLOR_GREEN   "\x1b[32;1m"
+#define ANSI_COLOR_YELLOW  "\x1b[33;1m"
+#define ANSI_COLOR_BLUE    "\x1b[34;1m"
+#define ANSI_COLOR_MAGENTA "\x1b[35;1m"
+#define ANSI_COLOR_CYAN    "\x1b[36;1m"
+#define ANSI_BACK_BLACK    "\x1b[31;1m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+#define CLEAR "\033[2J"
 /************************************************************************/
 // FUNCTION PROTOTYPES
 
@@ -64,6 +79,17 @@ int main(int argc, char *argv[])
 	int i;
 
 	// read the message
+	printf(ANSI_COLOR_CYAN "Transmit Program written in C\n" ANSI_COLOR_RESET);
+	printf("\nHamming Code Implementation v1.0.0 by Mohamad Yassine\n");
+
+	printf(
+		ANSI_COLOR_RED 
+		"After running this program, please copy the output and run \n "
+		"the receive program "
+		ANSI_COLOR_GREEN
+		"./recv .\n\n"
+		ANSI_COLOR_RESET);
+
 	printf("Please enter a message to transmit: ");
 	readMessage(s, MAX_MSG_LENGTH, &numRead); 
 
@@ -81,14 +107,14 @@ int main(int argc, char *argv[])
 		}
 	}
 	// print the message
-	printf("\n\n Transmitted message (short integers):\n");
+	printf("\nTransmitted message (short integers):\n\n\t" ANSI_COLOR_RED);
 	for (i = 0; i < numRead; i++) {
 		printf("%d ", encodedMsg[i]);
 
 	}
 
 
-    printf("\n");
+    printf(ANSI_COLOR_RESET "\n\n");
 	return(0);
 }
 
@@ -208,4 +234,3 @@ int setParityBits(short *num)
     if (compareBits(2, P8_MASK, *num)) setShortBit(8, num);
    	return(0);
 }
-

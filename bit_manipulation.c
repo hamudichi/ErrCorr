@@ -197,16 +197,23 @@ void flipBitShort(int bitNum, short *num)
 /*****************************************************************************/
 /*
  * Compare the bits between the already known masks (P1_MASK, P2_MASK ..etc )
+ * Comparing usind AND operation, if there is a match then increment sum
  * 
+ * Input : 
+ * 	short modular 	: the number to use when modulating
+ * 	short mask 		: the given masks 
+ * 	short num 		: user provided short
+ * Output :
+ * 	the modular of the sum 
  */
 
 int compareBits(short modular, short mask, short num) {
     int sum = 0;
 
-    for (int i = 0; i < sizeof(mask)*8; i++) {
+    for (int i = 0; i < sizeof(mask)*8; i++) 
         if (isShortBitSet(num, i) & isShortBitSet(mask, i))
             sum += 1;
-    }
+    
 
     return sum % modular;
 } 
