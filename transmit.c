@@ -204,23 +204,33 @@ int setParityBits(short *num)
 
     /* Apply MASK */
     mask = *num & P1_MASK;
+   
     /* Find the sum total of resulting bits */
-    sum = countBits(mask); 
+    sum = isShortBitSet(mask, 3) ^ isShortBitSet(mask,  5) ^ isShortBitSet(mask,  7)
+       ^ isShortBitSet(mask,  9) ^ isShortBitSet(mask, 11); 
+
+    //sum = countBits(mask);
     /* Set parity bit p1*/
-    if (sum % 2 != 0) setShortBit(1, num); 
+    if (sum  != 0) setShortBit(1, num); 
 
     
     mask = *num & P2_MASK;
-    sum = countBits(mask);
-    if (sum % 2 != 0) setShortBit(2, num);
+    sum = isShortBitSet(mask, 3) ^ isShortBitSet(mask, 6) ^ isShortBitSet(mask, 7) 
+        ^ isShortBitSet(mask, 10) ^ isShortBitSet(mask, 11);
+    //sum = countBits(mask);
+    if (sum != 0)   setShortBit(2, num);
 
     mask = *num & P4_MASK;
-    sum = countBits(mask);
-    if (sum % 2 != 0) setShortBit(4, num);
+    //sum = countBits(mask);
+    sum = isShortBitSet(mask, 5) ^ isShortBitSet(mask, 6) ^ isShortBitSet(mask, 7)
+        ^ isShortBitSet(mask, 12);
+    if (sum  != 0) setShortBit(4, num);
     
     mask = *num & P8_MASK;
-    sum = countBits(mask);
-    if (sum % 2 != 0) setShortBit(8, num);
+    //sum = countBits(mask);
+    sum = isShortBitSet(mask, 9) ^ isShortBitSet(mask, 10) ^ isShortBitSet(mask, 11)
+        ^ isShortBitSet(mask, 12);
+    if (sum != 0) setShortBit(8, num);
     
 	return(0);
 }
