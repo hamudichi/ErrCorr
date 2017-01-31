@@ -163,20 +163,22 @@ void short2Char(short encodedNum, char *c)
 	int k;
 
 	*c = 0;
-	for (i = 0; i < 8; ++i) {
-		/* Reaching into bit positions 3,5,6,7,9,10,11,12*/
+	
+	for (i = 0; i < 8; i++) {
+		// Reaching into bit positions 3,5,6,7,9,10,11,12
 		if (i == 0) 			k = 3; 
 		if (i > 0  && i < 4) 	k = 4 + i; 
 		if (i > 3  && i < 8)    k = 5 + i;
 
-		/* Checking if bit at k is set aka == 1 */
-		bitSet = isShortBitSet( encodedNum, i); 
+		// Checking if bit at k is set aka == 1 
+		bitSet = isShortBitSet( encodedNum, k); 
 
-		/* if bit is 0.skip setCharBit and increment i */
+		// if bit is 0.skip setCharBit and increment i 
 		if (bitSet == 0) continue;
 
-		/* Set the correct bit in the decoded char*/
+		// Set the correct bit in the decoded char
 		setCharBit(i, c);
+
 	}
 }
 
