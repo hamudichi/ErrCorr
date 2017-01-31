@@ -13,7 +13,7 @@ As part of the simulation, the program also corrects any 1-bit errors in the rec
 
 Revision:
 a. Initial code - Doron Nussbaum
-
+b. Updated code - Mohamad Yassine
 
 */
 
@@ -163,21 +163,20 @@ void short2Char(short encodedNum, char *c)
 	int k;
 
 	*c = 0;
-
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < 8; ++i) {
 		/* Reaching into bit positions 3,5,6,7,9,10,11,12*/
 		if (i == 0) 			k = 3; 
-		if (i >= 1  && i <= 3) 	k = 4 + i; 
-		if (i >= 4  && i <= 7) 	k = 5 + i;
+		if (i > 0  && i < 4) 	k = 4 + i; 
+		if (i > 3  && i < 8)    k = 5 + i;
 
 		/* Checking if bit at k is set aka == 1 */
-		bitSet = isShortBitSet(encodedNum, k); 
+		bitSet = isShortBitSet( encodedNum, i); 
 
 		/* if bit is 0.skip setCharBit and increment i */
-		if (!bitSet) continue;
+		if (bitSet == 0) continue;
 
 		/* Set the correct bit in the decoded char*/
-		setCharBit(i, &c);
+		setCharBit(i, c);
 	}
 }
 
@@ -207,56 +206,38 @@ void correctCode(short *num)
 
 	// check parity bit p1
     // get the bits related to P1 using P1_MASK
-   
 
-    // count the bits
+    // Get the set default parity
+    parity = 0;
+    storedParity = isShortBitSet(*num, 1);
 
-    // determine if the parity bit should have been set 
-
-
-	// get the parity for P1_MASK htat is stored in *num 
+    if (compareBits(2, P1_MASK, *num)) parity = 1;
     
+    // Comapring before and now (checking if an error occured)
+    if (storedParity != parity) bitNumber += 1;
+
+    // Do the same for the rest
     
-    // compare the calculated parity with the stored parity
+    parity = 0; 
+    storedParity = isShortBitSet(*num, 2);
+    if (compareBits(2, P2_MASK, *num)) parity = 1;
+    if (storedParity != parity) bitNumber += 2;
 
-	
-    // if the two parities are different add 2^0 to bitNumber
+ 
+    parity = 0; 
+    storedParity = isShortBitSet(*num, 4);
+    if (compareBits(2, P4_MASK, *num)) parity = 1;
+    if (storedParity != parity) bitNumber += 4;
 
-
-
-	// simlilary check parity bit p2
-    // calculate the parity for P2
-	
-    
-    // compare the calculated parity with the stored parity
-	
-        
-	// if the two parities are different add 2^1 to bitNumber
-
-
-	// check parity bit p4
-    // calculate the parity for P4
-	
-    
-    // compare the calculated parity with the stored parity
-	
-        
-	// if the two parities are different add 2^2 to bitNumber
+ 
+    parity = 0; 
+    storedParity = isShortBitSet(*num, 8);
+    if (compareBits(2, P8_MASK, *num)) parity = 1;
+    if (storedParity != parity) bitNumber += 8;
 
 
+    // Flip incorect bit
+    flipBitShort(bitNumber, num);
 
-
-	// check parity bit p8
-    // calculate the parity for P8
-	
-    
-    // compare the calculated parity with the stored parity
-	
-        
-	// if the two parities are different add 2^3 to bitNumber
-
-
-
-    // if necessary flip the bit at position bitNumber 
-}
-
+    return ;
+} 
