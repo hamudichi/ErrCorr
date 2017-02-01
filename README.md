@@ -5,7 +5,7 @@ Updated code by Mohamad Yassine - January 2017`
 ##### Error Detection and Correctiong using Hamming Code Implementation
 To demonstrate how parity checking works using the Hamming method. This program uses 4 individual bits to parity check, and can therefore correct it'sefl in case a bit is lost over transmision.
 
-##### Dependecies
+##### Dependencies
 None.
 
 ##### Compilation and Execution

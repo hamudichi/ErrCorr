@@ -13,7 +13,7 @@ As part of the simulation, the program also corrects any 1-bit errors in the rec
 
 Revision:
 a. Initial code - Doron Nussbaum
-b. Updated code - Mohamad Yassine
+b. Updated code - Mohamad Yassine 100966528
 
 */
 
@@ -227,16 +227,15 @@ void correctCode(short *num)
 	int parity;		// a parity bit either 0 or 1
 	int storedParity; // the parity bit in the encoded char
 
-	// check parity bit p1
-    // get the bits related to P1 using P1_MASK
-
-    // Get the set default parity
+	// Reset parity
     parity = 0;
+    // The bit we received
     storedParity = isShortBitSet(*num, 1);
 
     if (compareBits(2, P1_MASK, *num)) parity = 1;
     
     // Comapring before and now (checking if an error occured)
+    // If there is an error add to BitNumber 
     if (storedParity != parity) bitNumber += 1;
 
     // Do the same for the rest
@@ -258,7 +257,7 @@ void correctCode(short *num)
     if (compareBits(2, P8_MASK, *num)) parity = 1;
     if (storedParity != parity) bitNumber += 8;
 
-    // Flip incorrect bit
+    // Flip incorrect bit at bitNumber
     flipBitShort(bitNumber, num);
 
     return;

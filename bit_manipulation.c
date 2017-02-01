@@ -9,7 +9,7 @@ contains helper functions for manipulating bits
 
 Revisions:
 file created: Doron Nussbaum
-implemented function prototypes - Mohamad Yassine
+implemented function prototypes - Mohamad Yassine 100966528
 * /
 
 /************************************************************************/
@@ -18,18 +18,6 @@ implemented function prototypes - Mohamad Yassine
 
 #include "bit_manipulation.h"
 
-
-/************************************************************************/
-//MACROS  / DEFINES
-
-
-
-/************************************************************************/
-// FUNCTION PROTOTYPES
-
-
-
-/***************************************************/
 
 //example of a testing function main();
 #if 0
